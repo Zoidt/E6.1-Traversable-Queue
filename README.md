@@ -42,6 +42,26 @@ Options:
 
 We can think of a traversal as "scanning" a collection.
 
+### Range
+
+Taking a look a the `Range` class first will give you an idea about how to implement `Traversable` for `Queue`. A range is simply a `low` integer and a `high` integer. Notice that there is **no array* in this class, only two numbers. We can use the `Range` class like this:
+
+```java
+Range range = new Range(1, 5);
+
+range.reset();
+
+while (range.hasNext()) {
+    int nextInt = range.next();
+
+    System.out.println(nextInt);
+}
+```
+
+Internally, `Range` is not looping over an array. Rather, it is incrementing its own `tracker` variable which starts at `low`, and gets incremented every time `next()` is called.
+
+The behaviour should be similar for `Queue` where some sort of `tracker`/`traversal`/`cursor` variable will index the queue's array.
+
 ## 🚦 Let's Go
 
 Using the class `IntQueue` (rename it to `Queue` for this exercise) you developed in the [last exercise](https://github.com/JAC-CS-Programming-4-W23/E4.3-Circular-Queue), or using the starter `Queue` class included in this exercise:
@@ -51,7 +71,7 @@ Using the class `IntQueue` (rename it to `Queue` for this exercise) you develope
    1. Think about where `traversal` should start when `reset()` is called.
    2. Think about what value `next()` should return and how that will affect `traversal`.
    3. Think about what condition(s) you need to have for `hasNext()` based on the value of `traversal`.
-3. Pass the unit test in the class `TestTraversable`.
+3. Pass the unit tests in `TestTraversable`.
 
 ---
 

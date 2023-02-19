@@ -14,8 +14,8 @@ public class TestTraversable {
 
     @Test
     public void testQueueTraversableConstructor() {
-        Range range = new Range(3,6);
-        Queue<Integer> queue = new Queue<>(5, range);
+        Range range = new Range(3, 6);
+        Queue<Integer> queue = new Queue<>(5, range); // You'll need a new constructor in Queue.
 
         assertEquals(3, (int) queue.dequeue());
         assertEquals(4, (int) queue.dequeue());
