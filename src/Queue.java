@@ -5,7 +5,7 @@
 /**
  * FIFO collection
  */
-public class Queue<T> {
+public class Queue<T> implements Traversable<T> {
 
     // Constants
     private static final int DEFAULT_CAPACITY = 100;
@@ -20,6 +20,8 @@ public class Queue<T> {
     // track the empty queue with a flag (set to true when dequeue empties the queue)
     private boolean empty;
 
+    private int traversal;
+
     // Constructors
 
     public Queue() {
@@ -29,8 +31,19 @@ public class Queue<T> {
     public Queue(int capacity) {
         this.front = -1;
         this.rear = -1;
+        this.traversal = -1;
         this.empty = true;
         this.elements = (T[]) new Object[capacity];
+    }
+
+    public Queue(int capacity, Range range) {
+        this(capacity);
+
+        range.reset();
+
+        while(range.hasNext()) {
+            enqueue((T) range.next());
+        }
     }
 
     // Methods
@@ -140,4 +153,26 @@ public class Queue<T> {
             return m + (x % m);
     }
 
+    @Override
+    public void reset() {
+        traversal = mod(front + 1, elements.length);
+    }
+
+    @Override
+    public T next() {
+        if (traversal == mod(rear, elements.length)) {
+            throw new TraversalException();
+        }
+
+        T element = elements[traversal];
+
+        traversal = mod(traversal + 1, elements.length);
+
+        return element;
+    }
+
+    @Override
+    public boolean hasNext() {
+        return mod(traversal, elements.length) != mod(rear, elements.length) && !isEmpty();
+    }
 }
