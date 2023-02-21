@@ -5,7 +5,7 @@
 /**
  * FIFO collection
  */
-public class Queue<T> {
+public class Queue<T> implements Traversable<T> {
 
     // Constants
     private static final int DEFAULT_CAPACITY = 100;
@@ -20,6 +20,8 @@ public class Queue<T> {
     // track the empty queue with a flag (set to true when dequeue empties the queue)
     private boolean empty;
 
+    // Track cursor for traversable
+    private int tracker;
     // Constructors
 
     public Queue() {
@@ -140,4 +142,26 @@ public class Queue<T> {
             return m + (x % m);
     }
 
+
+    /**
+     * Initialize a traversal.
+     * If there are elements the traversal cursor is positioned on the first element.
+     * Otherwise, the traversal is complete (trivially).
+     */
+
+    @Override
+    public void reset() {
+        tracker = front;
+    }
+
+    @Override
+    public T next() {
+        tracker = (tracker + 1) % elements.length;
+        return elements[tracker];
+    }
+
+    @Override
+    public boolean hasNext() {
+        return tracker != rear && !empty; // TODO: make sure this works for full and empty queue
+    }
 }

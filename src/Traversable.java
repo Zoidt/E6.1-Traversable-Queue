@@ -30,6 +30,10 @@ public interface Traversable<T> {
      */
     T next();
 
+    /*
+
+    * */
+
     /**
      * Determine if a traversal can continue.
      * @preconditions The traversal has been initialized and no modifications (ex: `add` or `remove` operations) have been performed since the initialization.
