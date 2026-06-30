@@ -35,6 +35,16 @@ public class Queue<T> implements Traversable<T> {
         this.elements = (T[]) new Object[capacity];
     }
 
+    public Queue(int capacity, Traversable<T> source) {
+        this(capacity);
+
+        source.reset();
+
+        while(source.hasNext()){
+            enqueue(source.next());
+        }
+    }
+
     // Methods
 
     /**
