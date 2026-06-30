@@ -177,7 +177,6 @@ public class Queue<T> implements Traversable<T> {
                 size = elements.length;
             }
         }
-
     }
 
     @Override
