@@ -26,7 +26,7 @@ public interface Traversable<T> {
      * @postconditions If there is a next element, the traversal cursor has advanced
      *                 to it and it is returned. At the end of the traversal cursor is
      *                 "undefined", meaning that is no longer refers to an element.
-     * @return the next element in the traversal.
+     * @return the current element in the traversal.
      */
     T next();
 
