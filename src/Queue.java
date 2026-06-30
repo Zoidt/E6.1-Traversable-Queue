@@ -17,6 +17,8 @@ public class Queue<T> implements Traversable<T> {
     private int front;
     private int rear;
 
+    private int size;
+
     // track the empty queue with a flag (set to true when dequeue empties the queue)
     private boolean empty;
 
@@ -32,6 +34,7 @@ public class Queue<T> implements Traversable<T> {
         this.front = -1;
         this.rear = -1;
         this.empty = true;
+        this.size = 0;
         this.elements = (T[]) new Object[capacity];
     }
 
@@ -60,6 +63,7 @@ public class Queue<T> implements Traversable<T> {
         // enqueue the element
         rear = mod(rear + 1, elements.length);  // (rear + 1) % elements.length
         elements[rear] = item;
+        size++;
 
         // enqueue means the queue is not empty
         empty = false;
@@ -79,6 +83,7 @@ public class Queue<T> implements Traversable<T> {
         front = mod(front + 1, elements.length);
         T element = elements[front];
         elements[front] = null;
+        size--;
 
         // dequeue can make the queue empty
         if(front == rear)
@@ -162,16 +167,34 @@ public class Queue<T> implements Traversable<T> {
     @Override
     public void reset() {
         tracker = front;
+
+        if (empty) {
+            size = 0;
+        } else {
+            size = mod(rear - front, elements.length);
+            // If not empty but mod is  0 this means it is full
+            if (size == 0) {
+                size = elements.length;
+            }
+        }
+
     }
 
     @Override
     public T next() {
+        if(!hasNext())
+        {
+            throw new TraversalException();
+        }
         tracker = (tracker + 1) % elements.length;
+        size--;
         return elements[tracker];
     }
 
     @Override
     public boolean hasNext() {
-        return tracker != rear && !empty; // TODO: make sure this works for full and empty queue
+        // Queue is not empty
+        // Front quals to rear
+        return size > 0;
     }
 }
